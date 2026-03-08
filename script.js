@@ -152,6 +152,61 @@ function createCard(issue) {
             #${issueId} by ${author} <br> ${date}
         </div>
     `;
+  // MODAL on click
+  card.addEventListener("click", function () {
+    // console.log("card clicked, issueId:", issueId);
+    openModal(issueId);
+  });
 
+  return card;
+}
 
-    
+//TAB CHANGE
+function changeTab(tab) {
+  currentTab = tab;
+  // console.log("tab changed to:", tab);
+
+  // Reset All
+  document.getElementById("tab-all").classList.remove("tab-active");
+  document.getElementById("tab-open").classList.remove("tab-active");
+  document.getElementById("tab-closed").classList.remove("tab-active");
+
+  // selected tab activated
+  document.getElementById("tab-" + tab).classList.add("tab-active");
+
+  // search clear
+  document.getElementById("search-input").value = "";
+
+  // filter tab
+  if (tab === "all") {
+    showIssues(allIssues);
+  } else {
+    const filtered = [];
+    allIssues.forEach(function (issue) {
+      if (issue.status.toLowerCase() === tab) {
+        filtered.push(issue);
+      }
+    });
+    // console.log("filtered issues:", filtered);
+    showIssues(filtered);
+  }
+}
+
+// OPEN/CLOSED COUNT
+
+function updateStatusCount() {
+  let openCount = 0;
+  let closedCount = 0;
+  allIssues.forEach(function (issue) {
+    if (issue.status.toLowerCase() === "open") {
+      openCount = openCount + 1;
+    } else {
+      closedCount = closedCount + 1;
+    }
+  });
+
+    // console.log("open:", openCount, "closed:", closedCount);
+
+  document.getElementById("open-count").textContent = openCount;
+  document.getElementById("closed-count").textContent = closedCount;
+}
