@@ -305,3 +305,47 @@ function fillModal(issue) {
     document.getElementById("modal-priority-low").classList.remove("hidden");
   }
 }
+function closeModal() {
+  const modal = document.getElementById("issue-modal");
+  modal.classList.add("hidden");
+}
+
+// modal outside click to close
+document.getElementById("issue-modal").addEventListener("click", function (e) {
+  if (e.target === this) {
+    closeModal();
+  }
+});
+
+// SPINNER
+
+function showSpinner() {
+  document.getElementById("loading-spinner").style.display = "flex";
+  document.getElementById("cards-grid").innerHTML = "";
+}
+function hideSpinner() {
+  document.getElementById("loading-spinner").style.display = "none";
+}
+//       DATE FORMAT
+function formatDate(dateStr) {
+  if (!dateStr) return "—";
+  const d = new Date(dateStr);
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+// new issue button a click to search
+document
+  .querySelector(".btn.btn-primary.btn-md")
+  .addEventListener("click", function () {
+    const query = document.getElementById("search-input").value.trim();
+    // console.log("new issue button clicked, query:", query);
+    if (query === "") {
+      showIssues(allIssues);
+    } else {
+      doSearch(query);
+    }
+  });
