@@ -210,3 +210,98 @@ function updateStatusCount() {
   document.getElementById("open-count").textContent = openCount;
   document.getElementById("closed-count").textContent = closedCount;
 }
+
+//SEARCH
+
+async function doSearch(query) {
+  showSpinner();
+  const res = await fetch(
+    "https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=" + query,
+  );
+  const data = await res.json();
+  // console.log("search result:", data);
+  const results = data.data || data.issues || data;
+
+  hideSpinner();
+  showIssues(results);
+  document.getElementById("issues-count-text").textContent =
+    results.length + " Issues";
+}
+
+// MODAL
+async function openModal(issueId) {
+  // console.log("opening modal for id:", issueId);
+  const modal = document.getElementById("issue-modal");
+  modal.classList.remove("hidden");
+  document.getElementById("modal-title").textContent = "Loading...";
+  const res = await fetch(
+    "https://phi-lab-server.vercel.app/api/v1/lab/issue/" + issueId,
+  );
+  const data = await res.json();
+  // console.log("single issue data:", data);
+  const issue = data.data || data.issue || data;
+  fillModal(issue);
+}
+function fillModal(issue) {
+  // console.log("filling modal with:", issue);
+  const status = issue.status;
+  const id = issue.id;
+  const date = formatDate(issue.createdAt);
+
+  let labels = issue.labels;
+  if (!Array.isArray(labels)) {
+    labels = [labels];
+  }
+  // title
+  document.getElementById("modal-title").textContent = issue.title;
+  // status badge
+  const statusEl = document.getElementById("modal-status");
+  if (status.toLowerCase() === "open") {
+    statusEl.textContent = "● Open";
+    statusEl.className =
+      "text-xs font-bold px-3 py-1 rounded-full bg-green-100 text-green-700 border border-green-300";
+  } else {
+    statusEl.textContent = "● Closed";
+    statusEl.className =
+      "text-sm font-bold px-3 py-1 rounded-full bg-purple-100 text-purple-700 border border-purple-300";
+  }
+  // opened by
+  document.getElementById("modal-opened-info").textContent =
+    "#" + id + " · Opened by " + issue.author + " · " + date;
+  // labels
+  let labelsHTML = "";
+  labels.forEach(function (l) {
+    let labelColor = "bg-gray-100 text-gray-700";
+    if (l === "BUG") {
+      labelColor = "bg-red-100 text-red-600";
+    } else if (l === "HELP WANTED") {
+      labelColor = "bg-purple-100 text-purple-600";
+    } else if (l === "ENHANCEMENT") {
+      labelColor = "bg-green-100 text-green-600";
+    }
+    labelsHTML += `<span class="text-sm font-bold px-2 py-0.5 rounded-full ${labelColor}">${l}</span>`;
+  });
+  document.getElementById("modal-labels").innerHTML = labelsHTML;
+
+  // description
+  document.getElementById("modal-desc").textContent = issue.description;
+
+  // assignee
+  const assignee =
+    issue.assignee || issue.assignedTo || issue.assigned_to || "—";
+  document.getElementById("modal-assignee").textContent = assignee;
+
+  //  toUpperCase() so HIGH/Medium/low all match correctly
+  document.getElementById("modal-priority-high").classList.add("hidden");
+  document.getElementById("modal-priority-medium").classList.add("hidden");
+  document.getElementById("modal-priority-low").classList.add("hidden");
+
+  const p = (issue.priority || "").toUpperCase();
+  if (p === "HIGH") {
+    document.getElementById("modal-priority-high").classList.remove("hidden");
+  } else if (p === "MEDIUM") {
+    document.getElementById("modal-priority-medium").classList.remove("hidden");
+  } else {
+    document.getElementById("modal-priority-low").classList.remove("hidden");
+  }
+}
