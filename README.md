@@ -1,129 +1,114 @@
-# 🌟 Welcome To (সহজ সরল সিম্পল) Assignment - 5
+# 📘 Key JavaScript Concepts (Explained Simply)
 
-# **📅 Deadline For 60 marks:** 9th March, 2026 (11:59 pm ⏱️)  
-#  📅 No Deadline For 50 marks  
-# **📅 Deadline For 30 marks:** Any time after 9th March.
+### 1️⃣ Difference between `var`, `let`, and `const`
 
----
+In JavaScript, we use `var`, `let`, and `const` to create variables. Each behaves differently.
 
-# Assignment-05: GitHub Issues Tracker
+- **`var`** → Old-school way  
+  It has **function scope** (visible anywhere inside the function).  
+  You can redeclare and reassign it.  
+  ```js
+  var score = 100;
+  score = 150;       // Works
+  var score = 200;   // Also works (no error)
+  ```
 
+- **`let`** → Modern & safer  
+  It has **block scope** (only works inside `{}`).  
+  You can reassign, but you **cannot redeclare** in the same block.  
+  ```js
+  let age = 22;
+  age = 23;          // Works
+  // let age = 25;   // Error! Cannot redeclare
+  ```
 
-### **API Endpoints:**
-###  **All Issues:** 
-  - https://phi-lab-server.vercel.app/api/v1/lab/issues 
-
-
-###  **Single Issue:**
-   - https://phi-lab-server.vercel.app/api/v1/lab/issue/{id}
-
-   - Example: https://phi-lab-server.vercel.app/api/v1/lab/issue/33
-
-
-###  **Search Issue:** https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q={searchText}
-
-   - Example:  https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=notifications
-
-
----
-
-## 📝 Main Requirements
-
-## 🎨 Design Part
-
-## Login Page
-- Create a login page containing a logo, title, and sub-title
-- Below that, there will be 2 inputs, a sign-in button, and a demo credential to sign in. Follow the Figma for this page 
-- Styled as per Figma
-
-## Main Page: 
-
-### Navbar: 
-
-- Navbar with website logo/name on the left
-- Search input and button on the right
-
-### Tab Section like Figma: 
-
-- 3 tab ( All, Open, Closed) at the top of this section.(**All**, **Open**, **Closed**)
-
-- Below the tab, there will be an icon, the issue count, some text on the left, and an open and closed marker on the right
-
-- Responsiveness: The website should be responsive for mobile devices. It is totally up to you. 
-
-
---- 
-
-
-## ⚙️ Functionalities
-- In login page, there will be default admin credentials (username, password). You need to sign in using these credentials.
-
-- Load all issues and display as per Figma
-
-- On clicking on an open or closed tab, it will load the issues data of the related tab and show it in a display-like card in a 4-column layout like Figma. By default, it will show all data 
-
-- Each card shows:
-  - Title
-  - Description
-  - Status
-  - Category
-  - Author
-  - Priority
-  - Label
-  - CreatedAt
-- Clicking on a tree name in a card will open a modal and show all the information about that Issue. 
-
-### 🚀 Challenges
-
-
-- Show the card Top border based on their category(open, closed), open card will have Green Boder, closed card will have a purple border on top. 
-
-- Loading spinner on data load
-
-- Show active button on changing category names
-
-- Implement Search Functionality and 8 meaningful github commit.  
-
-- Create a readme file and answer this question on your own. Don’t copy-paste from Google or any AI chatbot. 
-    - 1️⃣ What is the difference between var, let, and const?
-    - 2️⃣ What is the spread operator (...)?
-    - 3️⃣ What is the difference between map(), filter(), and forEach()?
-    - 4️⃣ What is an arrow function?
-    - 5️⃣ What are template literals?
-
+- **`const`** → For values that shouldn’t change  
+  Also has **block scope**.  
+  You **cannot reassign** after the first value.  
+  ```js
+  const country = "Bangladesh";
+  // country = "India";   // Error! Assignment to constant variable
+  ```
 
 ---
 
-## 🛠️ Technology Stack
+### 2️⃣ Spread Operator (`...`)
 
-- **HTML**
-- **CSS** (Vanilla/Tailwind/DaisyUI)
-- **JavaScript** (Vanilla)
+Three dots `...` — used to **spread** or **copy** elements from arrays or objects.
 
----
+Super useful for:
+- Copying an array
+- Merging arrays
+- Adding new items easily
 
-## 🔑 Demo Credentials
+```js
+const oldFriends = ["Ratul", "Mim", "Sohan"];
+const newFriends = [...oldFriends, "Tisha", "Nabil"];
 
-```text
-Username: admin
-Password: admin123
+console.log(newFriends);
+// Output: ["Ratul", "Mim", "Sohan", "Tisha", "Nabil"]
 ```
 
+---
+
+### 3️⃣ `map()`, `filter()`, and `forEach()` — What’s the difference?
+
+These are very common array methods.
+
+- **`map()`** → Changes every item and returns a **new array**  
+  ```js
+  const marks = [40, 55, 70];
+  const doubled = marks.map(num => num * 2);
+  // doubled = [80, 110, 140]
+  ```
+
+- **`filter()`** → Keeps only items that match a condition → returns a **new array**  
+  ```js
+  const ages = [15, 18, 21, 14, 25];
+  const adults = ages.filter(age => age >= 18);
+  // adults = [18, 21, 25]
+  ```
+
+- **`forEach()`** → Just runs a function for each item → **doesn’t return anything**  
+  ```js
+  const names = ["Tisha", "Riya", "Anika"];
+  names.forEach(name => console.log("Hi " + name + "!"));
+  ```
 
 ---
 
-### Optional: 
- - No need to show status: Open, Closed styles On modals. 
- - No Need to show icon on labels 
- - No need to apply styles on Priority 
---- 
+### 4️⃣ Arrow Functions
 
+A shorter, cleaner way to write functions using `=>` instead of the `function` keyword.
 
-## 📤 What to submit
+```js
+// Old style
+function multiply(a, b) {
+  return a * b;
+}
 
-- **GitHub Repository Link:**
-- **Live Site Link:**
+// Arrow function
+const multiply = (a, b) => a * b;
+
+// Even shorter (one line = implicit return)
+const add = (x, y) => x + y;
+```
+
+Great for short functions, especially in `.map()`, `.filter()`, etc.
 
 ---
 
+### 5️⃣ Template Literals (Backticks `` ` ``)
 
+Forget `+` for string concatenation. Use backticks and `${}` to insert variables — much cleaner!
+
+```js
+const student = "Tirtho";
+const age = 24;
+
+const intro = `My name is ${student}, I am ${age} years old.`;
+console.log(intro);
+// Output: My name is Tirtho, I am 24 years old.
+```
+
+Looks way more readable, especially with multiple variables.
