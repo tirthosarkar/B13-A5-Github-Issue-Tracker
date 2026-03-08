@@ -24,7 +24,7 @@
 
     <!-- Fav Icon -->
     <link rel="shortcut icon" href="./assets/github-logo.png" type="image/x-icon">
-<!-- All Styles here -->
+    <!-- All Styles here -->
     <style>
         * {
             font-family: "Inter", sans-serif;
@@ -218,11 +218,19 @@
             <!-- CARDS AREA -->
             <div class="bg-white border border-gray-400 border-t-0 rounded-b-xl p-4 relative min-h-64">
 
-               <div id="loading-spinner" style="display:none;"
-    class="absolute inset-0 z-10 flex items-center justify-center bg-white/80 rounded-b-xl">
-    <div style="width:40px; height:40px; border:3px solid #e5e7eb; border-top-color:#4f46e5; border-radius:50%; animation:spin 0.7s linear infinite;"></div>
-    <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
-</div>
+                <div id="loading-spinner" style="display:none;"
+                    class="absolute inset-0 z-10 flex items-center justify-center bg-white/80 rounded-b-xl">
+                    <div
+                        style="width:40px; height:40px; border:3px solid #e5e7eb; border-top-color:#4f46e5; border-radius:50%; animation:spin 0.7s linear infinite;">
+                    </div>
+                    <style>
+                        @keyframes spin {
+                            to {
+                                transform: rotate(360deg);
+                            }
+                        }
+                    </style>
+                </div>
 
                 <!-- 4 column grid -->
                 <div id="cards-grid" class="cards-grid"
@@ -244,7 +252,7 @@
                 <h2 id="modal-title" class="font-bold text-gray-900 text-lg flex-1 pr-4 leading-snug">
                     Loading...
                 </h2>
-                           </div>
+            </div>
 
             <!-- Status + Opened by -->
             <div class="flex items-center gap-2 flex-wrap px-6 pt-3">
